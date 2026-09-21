@@ -4,7 +4,7 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.webhook.aiohttp_server import SetupApplication, SimpleRequestHandler
+from aiogram.webhook.aiohttp_server import setup_application, SimpleRequestHandler
 
 from config import BOT_TOKEN, WEBHOOK_PATH, WEBHOOK_URL, PORT
 from handlers import start, admin
@@ -41,7 +41,7 @@ def build_app() -> web.Application:
     app.router.add_get("/", health)
 
     SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path=WEBHOOK_PATH)
-    SetupApplication(app, dp, bot=bot)
+    setup_application(app, dp, bot=bot)
 
     app.on_startup.append(on_startup)
     app.on_shutdown.append(on_shutdown)
